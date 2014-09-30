@@ -1,0 +1,164 @@
+FORMAT: 1A
+HOST: http://www.google.com
+
+# DAP Services a.s. API, version 2
+
+API verze 2. Opřeno o model3.
+
+##Allowed HTTPs requests:
+
+- `POST` - Creates or updates a resource
+- `PUT` - Updates a resource
+- `GET` - Retrieves a resource or list of resources
+- `DELETE` - Delete a resource
+
+##Typical Server Responses
+
+- 200 `OK` - The request was successful (some API calls may return 201 instead).
+- 201 `Created` - The request was successful and a resource was created.
+- 204 `No Content` - The request was successful but there is no representation to return (that is, the response is empty).
+- 400 `Bad Request` - The request could not be understood or was missing required parameters.
+- 401 `Unauthorized` - Authentication failed or user does not have permissions for the requested operation.
+- 403 `Forbidden` - Access denied.
+- 404 `Not Found` - Resource was not found.
+- 405 `Method Not Allowed` - Requested method is not supported for the specified resource.
+- 429 `Too Many Requests` - Exceeded API limits. Pause requests, wait one minute, and try again.
+- 503 `Service Unavailable` - The service is temporary unavailable. Try again later.
+
+# API root [/]
+
+Bez atributů, vrací `403`.
+
+## Požadavek na root [GET]
+
++ Response 403
+
+
+# Scan [/scan]
+
+Snímání osob.
+
+### Vytváření snímání [POST]
+
+
+Seznam client_data_key:
+
+| 1  | Jméno                             |
+|----|-----------------------------------|
+| 2  | Příjmení                          |
+| 3  | Datum narození                    |
+| 4  | Vzdělání                          |
+| 5  | Obec                              |
+| 6  | Email                             |
+| 7  | Důvod snímání                     |
+| 8  | Pohlaví                           |
+| 9  | Skupina                           |
+| 10 | Věk                               |
+| 11 | Pracovní pozice                   |
+| 12 | Id snímané osoby                  |
+| 13 | Id zodpovědné osoby               |
+| 14 | Společnost                        |
+| 15 | Language code - ISO 639-2 alpha-3 |
+| 16 | Country code - ISO ALPHA-3 code   |
+| 17 | Externí Id skupiny snímků
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+        {
+            "name": "Scan name",
+            "description": "Description",
+            "state": "ACTIVE|CLOSED|TEST",
+            "scan_area_id": "number or enum - jedna se o typ slovniho modulu - ciselnik",
+            "scan_module_id": 1,
+            "module_type_id": "number or what - jedna se o verzi povinnych slov ~ zakladu",
+            "scan_mask": [
+                {
+                    "label": "Gender",
+                    "editable": false,
+                    "order": 1,
+                    "client_data_key": 8,
+                    "list_items": ["1", "2"]
+                },
+                {
+                    "label": "Name",
+                    "editable": true,
+                    "order": 2,
+                    "client_data_key": 1,
+                },
+                {
+                    "label": "Year of birth",
+                    "editable": false,
+                    "order": 3,
+                    "client_data_key": 3,
+                    "number_from": 1993,
+                    "number_to": 2008,
+                    "number_step": 1,
+                    "list_items": [
+                        "1993",
+                        "1994",
+                        "1995",
+                        "1996",
+                        "1997",
+                        "1998",
+                        "1999",
+                        "2000",
+                        "2001",
+                        "2002",
+                        "2003",
+                        "2004",
+                        "2005",
+                        "2006",
+                        "2007"
+                    ]
+                }
+            ]
+        }
+
++ Response 200 (application/json)
+
+    + Header
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "scan_id": 1,
+                "scan_code": "sadasd"
+            }
+
++ Response 400 (Bad Request)
+
+    + Header
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro nevalidní požadavek."
+                    "error_code": "error.code.badRequest"
+                }
+            }
+
++ Response 401 (Unauthorized)
+
+    + Header
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro autentizaci."
+                    "error_code": "error.code.authorization"
+                }
+            }
