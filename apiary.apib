@@ -5,14 +5,14 @@ HOST: http://www.google.com
 
 API verze 2. Opřeno o model3.
 
-##Allowed HTTPs requests:
+## Allowed HTTPs requests:
 
 - `POST` - Creates or updates a resource
 - `PUT` - Updates a resource
 - `GET` - Retrieves a resource or list of resources
 - `DELETE` - Delete a resource
 
-##Typical Server Responses
+## Typical Server Responses
 
 - 200 `OK` - The request was successful (some API calls may return 201 instead).
 - 201 `Created` - The request was successful and a resource was created.
@@ -25,7 +25,7 @@ API verze 2. Opřeno o model3.
 - 429 `Too Many Requests` - Exceeded API limits. Pause requests, wait one minute, and try again.
 - 503 `Service Unavailable` - The service is temporary unavailable. Try again later.
 
-# API root [/]
+# Group API root [/]
 
 Bez atributů, vrací `403`.
 
@@ -34,11 +34,13 @@ Bez atributů, vrací `403`.
 + Response 403
 
 
-# Scan [/scan]
+# Group Scan
 
-Snímání osob.
+Zdroje a operace pro snímání osob.
 
-## Vytváření snímání [POST]
+## Snímání osob [/scan]
+
+### Vytváření snímání [POST]
 
 Seznam client_data_id:
 
