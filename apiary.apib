@@ -133,7 +133,7 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-type: application/json
+            Content-Type: application/json
 
     + Body
 
@@ -147,7 +147,7 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-type: application/json
+            Content-Type: application/json
 
     + Body
 
@@ -163,7 +163,7 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-type: application/json
+            Content-Type: application/json
 
     + Body
 
@@ -252,7 +252,7 @@ Popis atributů pro výstup viz resource scan [POST]
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-type: application/json
+            Content-Type: application/json
 
     + Body
 
@@ -281,7 +281,7 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-type: application/json
+            Content-Type: application/json
 
     + Body
 
@@ -305,7 +305,7 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-type: application/json
+            Content-Type: application/json
 
     + Body
 
@@ -321,7 +321,7 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-type: application/json
+            Content-Type: application/json
 
     + Body
 
@@ -340,7 +340,7 @@ Popis atributů pro výstup
 
 #### Popis atributů pro výstup
 
-- data - výstup přenášený pomocí base64. Typ výstupu je určen v hlavičce Content-type.
+- data - výstup přenášený pomocí base64. Typ výstupu je určen v atributu mime_type.
 
 + Request (application/json)
 
@@ -358,18 +358,18 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-type: application/pdf
+            Content-Type: application/json
 
     + Body
 
-            {"data": "base64(data)"}
+            {"data": "base64(data)", "mime_type": "application/pdf"}
 
 + Response 400 (Bad Request)
 
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-type: application/json
+            Content-Type: application/json
 
     + Body
 
@@ -385,7 +385,7 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-type: application/json
+            Content-Type: application/json
 
     + Body
 
