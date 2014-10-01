@@ -38,12 +38,11 @@ Bez atributů, vrací `403`.
 
 Snímání osob.
 
-### Vytváření snímání [POST]
+## Vytváření snímání [POST]
 
+Seznam client_data_id:
 
-Seznam client_data_key:
-
-| 1  | Jméno                             |
+| id | Jméno                             |
 |----|-----------------------------------|
 | 2  | Příjmení                          |
 | 3  | Datum narození                    |
@@ -62,10 +61,31 @@ Seznam client_data_key:
 | 16 | Country code - ISO ALPHA-3 code   |
 | 17 | Externí Id skupiny snímků
 
+Popis atributů pro požadavek
+
+- name, description - název, popis snímání
+- state - stav snímání, kombinace ACTIVE, CLOSED, TEST konstant (oddělení čárkou)
+- scan_area_id - zaměření snímání. Možnosti
+    - 1 - evaluace škol
+    - 3 - komeční snímání (základ je 86tka)
+- module_type_id - verze slovního modulu (odlišnost základních slov)
+- scan_module_id - id odpovídajícího slovního modulu
+- scan_mask - maska snímání ve snímači, může být **null**
+    - label - text zobrazený ve snímači
+    - editable - true | false
+    - order - pořadí na obrazovce
+    - client_data_id - viz výše
+    - list_items - možný výčet, zobrazuje se ve formě select prvku
+
+Popis atributů pro výstup
+
+- scan_code - kód do snímače
+- scan_id - jedinečný identifikátor snímání
+
 + Request (application/json)
 
     + Headers
-
+            Authorization: auth_token
             Accept: application/json
 
     + Body
@@ -82,40 +102,24 @@ Seznam client_data_key:
                     "label": "Gender",
                     "editable": false,
                     "order": 1,
-                    "client_data_key": 8,
+                    "client_data_id": 8,
                     "list_items": ["1", "2"]
                 },
                 {
                     "label": "Name",
                     "editable": true,
                     "order": 2,
-                    "client_data_key": 1,
+                    "client_data_id": 1,
                 },
                 {
                     "label": "Year of birth",
                     "editable": false,
                     "order": 3,
-                    "client_data_key": 3,
+                    "client_data_id": 3,
                     "number_from": 1993,
                     "number_to": 2008,
                     "number_step": 1,
-                    "list_items": [
-                        "1993",
-                        "1994",
-                        "1995",
-                        "1996",
-                        "1997",
-                        "1998",
-                        "1999",
-                        "2000",
-                        "2001",
-                        "2002",
-                        "2003",
-                        "2004",
-                        "2005",
-                        "2006",
-                        "2007"
-                    ]
+                    "list_items": ["1993", "1994", "1995", "1996", "1997", "1998"]
                 }
             ]
         }
@@ -129,9 +133,161 @@ Seznam client_data_key:
     + Body
 
             {
-                "scan_id": 1,
-                "scan_code": "sadasd"
+                "id": 1,
+                "scan_code": "scan_code"
             }
+
++ Response 400 (Bad Request)
+
+    + Header
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro nevalidní požadavek."
+                    "error_code": "error.code.badRequest"
+                }
+            }
+
++ Response 401 (Unauthorized)
+
+    + Header
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro autentizaci."
+                    "error_code": "error.code.authorization"
+                }
+            }
+
+
+## Informace o snímání [/scan/{id}]
+
+### Získání informací [GET]
+
+Popis atributů pro výstup viz resource scan [POST]
+
++ Request (application/json)
+
+    + Headers
+            Authorization: auth_token
+            Accept: application/json
+
++ Response 200 (application/json)
+
+    + Header
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "id": 1,
+                "scan_code": "sadasd",
+                "name": "Scan name",
+                "description": "Description",
+                "state": "ACTIVE",
+                "scan_area_id": 1,
+                "scan_module_id": 1,
+                "module_type_id": 1,
+                "scan_mask": [
+                    {
+                        "label": "Gender",
+                        "editable": false,
+                        "order": 1,
+                        "client_data_id": 8,
+                        "list_items": ["1", "2"]
+                    },
+                    {
+                        "label": "Name",
+                        "editable": true,
+                        "order": 2,
+                        "client_data_id": 1,
+                    },
+                    {
+                        "label": "Year of birth",
+                        "editable": false,
+                        "order": 3,
+                        "client_data_id": 3,
+                        "number_from": 1993,
+                        "number_to": 2008,
+                        "number_step": 1,
+                        "list_items": ["1993", "1994", "1995", "1996", "1997"]
+                    }
+                ]
+            }
+
++ Response 400 (Bad Request)
+
+    + Header
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro nevalidní požadavek."
+                    "error_code": "error.code.badRequest"
+                }
+            }
+
++ Response 401 (Unauthorized)
+
+    + Header
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro autentizaci."
+                    "error_code": "error.code.authorization"
+                }
+
+## Informace o nasnímaných osobách [/scan/{id}/scan_data]
+
+
+### Získání seznamu nasnímaných osob [GET]
+
+Popis atributů pro výstup
+
++ Request (application/json)
+
+    + Headers
+            Authorization: auth_token
+            Accept: application/json
+
++ Response 200 (application/json)
+
+    + Header
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            [
+                {
+                    "id": 1,
+                    "module_type_id": 1,
+                    "affected": true,
+                    "insert_time": "",
+                    "client_data": [
+                        {
+                            "8": "1",
+                            "10": "20"
+                        }
+                    ]
+                }
+            ]
 
 + Response 400 (Bad Request)
 
