@@ -130,9 +130,10 @@ Popis atributů pro výstup
 
 + Response 200 (application/json)
 
-    + Header
+    + Headers
 
             Access-Control-Allow-Origin: *
+            Content-type: application/json
 
     + Body
 
@@ -143,9 +144,10 @@ Popis atributů pro výstup
 
 + Response 400 (Bad Request)
 
-    + Header
+    + Headers
 
             Access-Control-Allow-Origin: *
+            Content-type: application/json
 
     + Body
 
@@ -158,9 +160,10 @@ Popis atributů pro výstup
 
 + Response 401 (Unauthorized)
 
-    + Header
+    + Headers
 
             Access-Control-Allow-Origin: *
+            Content-type: application/json
 
     + Body
 
@@ -181,12 +184,13 @@ Popis atributů pro výstup viz resource scan [POST]
 + Request (application/json)
 
     + Headers
+
             Authorization: auth_token
             Accept: application/json
 
 + Response 200 (application/json)
 
-    + Header
+    + Headers
 
             Access-Control-Allow-Origin: *
 
@@ -230,7 +234,7 @@ Popis atributů pro výstup viz resource scan [POST]
 
 + Response 400 (Bad Request)
 
-    + Header
+    + Headers
 
             Access-Control-Allow-Origin: *
 
@@ -245,9 +249,10 @@ Popis atributů pro výstup viz resource scan [POST]
 
 + Response 401 (Unauthorized)
 
-    + Header
+    + Headers
 
             Access-Control-Allow-Origin: *
+            Content-type: application/json
 
     + Body
 
@@ -267,14 +272,16 @@ Popis atributů pro výstup
 + Request (application/json)
 
     + Headers
+
             Authorization: auth_token
             Accept: application/json
 
 + Response 200 (application/json)
 
-    + Header
+    + Headers
 
             Access-Control-Allow-Origin: *
+            Content-type: application/json
 
     + Body
 
@@ -295,9 +302,10 @@ Popis atributů pro výstup
 
 + Response 400 (Bad Request)
 
-    + Header
+    + Headers
 
             Access-Control-Allow-Origin: *
+            Content-type: application/json
 
     + Body
 
@@ -310,9 +318,74 @@ Popis atributů pro výstup
 
 + Response 401 (Unauthorized)
 
-    + Header
+    + Headers
 
             Access-Control-Allow-Origin: *
+            Content-type: application/json
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro autentizaci."
+                    "error_code": "error.code.authorization"
+                }
+            }
+
+# Group Result
+
+## Generování výstupů [/result/{id}/generate]
+
+### POST
+
+#### Popis atributů pro výstup
+
+- data - výstup přenášený pomocí base64. Typ výstupu je určen v hlavičce Content-type.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: auth_token
+            Accept: application/json
+
+    + Body
+
+        {"scan_data_ids": [1, 2, 3]}
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+            Content-type: application/pdf
+
+    + Body
+
+            {"data": "base64(data)"}
+
++ Response 400 (Bad Request)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+            Content-type: application/json
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro nevalidní požadavek."
+                    "error_code": "error.code.badRequest"
+                }
+            }
+
++ Response 401 (Unauthorized)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+            Content-type: application/json
 
     + Body
 
