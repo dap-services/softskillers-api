@@ -25,6 +25,8 @@ API verze 2. Opřeno o model3.
 - 429 `Too Many Requests` - Exceeded API limits. Pause requests, wait one minute, and try again.
 - 503 `Service Unavailable` - The service is temporary unavailable. Try again later.
 
+>> Čas ve všech položkách (pokud není řečeno jinak) je unix_time plus ms (http://www.epochconverter.com).
+
 # Group Scan
 
 Zdroje a operace pro snímání osob.
@@ -37,8 +39,9 @@ Seznam client_data_id:
 
 | id | Jméno                             |
 |----|-----------------------------------|
+| 1  | Jméno                             |
 | 2  | Příjmení                          |
-| 3  | Datum narození                    |
+| 3  | Datum narození (rok narození)     |
 | 4  | Vzdělání                          |
 | 5  | Obec                              |
 | 6  | Email                             |
@@ -52,7 +55,8 @@ Seznam client_data_id:
 | 14 | Společnost                        |
 | 15 | Language code - ISO 639-2 alpha-3 |
 | 16 | Country code - ISO ALPHA-3 code   |
-| 17 | Externí Id skupiny snímků
+| 17 | Externí Id skupiny snímků         |
+| 18 | Volitelná položka od klienta      |
 
 Popis atributů pro požadavek
 
@@ -73,56 +77,58 @@ Popis atributů pro požadavek
 Popis atributů pro výstup
 
 - scan_code - kód do snímače
-- scan_id - jedinečný identifikátor snímání
+- id - jedinečný identifikátor snímání
+
+Jakékoliv dotazy na Scan probíhají pomocí scan_code - identifikuje snímání v čase. Není možné mít více snímání se stavem `ACTIVE` a stejným scan_code.
 
 + Request (application/json)
 
     + Headers
+
             Authorization: auth_token
             Accept: application/json
 
     + Body
 
-        {
-            "name": "Scan name",
-            "description": "Description",
-            "state": "ACTIVE|CLOSED|TEST",
-            "scan_area_id": "number or enum - jedna se o typ slovniho modulu - ciselnik",
-            "scan_module_id": 1,
-            "module_type_id": "number or what - jedna se o verzi povinnych slov ~ zakladu",
-            "scan_mask": [
-                {
-                    "label": "Gender",
-                    "editable": false,
-                    "order": 1,
-                    "client_data_id": 8,
-                    "list_items": ["1", "2"]
-                },
-                {
-                    "label": "Name",
-                    "editable": true,
-                    "order": 2,
-                    "client_data_id": 1,
-                },
-                {
-                    "label": "Year of birth",
-                    "editable": false,
-                    "order": 3,
-                    "client_data_id": 3,
-                    "number_from": 1993,
-                    "number_to": 2008,
-                    "number_step": 1,
-                    "list_items": ["1993", "1994", "1995", "1996", "1997", "1998"]
-                }
-            ]
-        }
+            {
+                "name": "Scan name",
+                "description": "Description",
+                "state": "ACTIVE|CLOSED|TEST",
+                "scan_area_id": "number or enum - jedna se o typ slovniho modulu - ciselnik",
+                "scan_module_id": 1,
+                "module_type_id": "number or what - jedna se o verzi povinnych slov ~ zakladu",
+                "scan_mask": [
+                    {
+                        "label": "Gender",
+                        "editable": false,
+                        "order": 1,
+                        "client_data_id": 8,
+                        "list_items": ["1", "2"]
+                    },
+                    {
+                        "label": "Name",
+                        "editable": true,
+                        "order": 2,
+                        "client_data_id": 1,
+                    },
+                    {
+                        "label": "Year of birth",
+                        "editable": false,
+                        "order": 3,
+                        "client_data_id": 3,
+                        "number_from": 1993,
+                        "number_to": 2008,
+                        "number_step": 1,
+                        "list_items": ["1993", "1994", "1995", "1996", "1997", "1998"]
+                    }
+                ]
+            }
 
 + Response 200 (application/json)
 
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-Type: application/json
 
     + Body
 
@@ -136,7 +142,6 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-Type: application/json
 
     + Body
 
@@ -152,7 +157,6 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-Type: application/json
 
     + Body
 
@@ -164,7 +168,7 @@ Popis atributů pro výstup
             }
 
 
-## Informace o snímání [/scan/{id}]
+## Informace o snímání [/scan/{scan_code}]
 
 ### Získání informací [GET]
 
@@ -187,13 +191,14 @@ Popis atributů pro výstup viz resource scan [POST]
 
             {
                 "id": 1,
-                "scan_code": "sadasd",
+                "scan_code": "scan_code",
                 "name": "Scan name",
                 "description": "Description",
                 "state": "ACTIVE",
                 "scan_area_id": 1,
                 "scan_module_id": 1,
                 "module_type_id": 1,
+                "insert_time": "1412840432000",
                 "scan_mask": [
                     {
                         "label": "Gender",
@@ -241,7 +246,6 @@ Popis atributů pro výstup viz resource scan [POST]
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-Type: application/json
 
     + Body
 
@@ -251,12 +255,14 @@ Popis atributů pro výstup viz resource scan [POST]
                     "error_code": "error.code.authorization"
                 }
 
-## Informace o nasnímaných osobách [/scan/{id}/scan_data]
+## Informace o nasnímaných osobách [/scan/{scan_code}/scan_data]
 
 
 ### Získání seznamu nasnímaných osob [GET]
 
-Popis atributů pro výstup
+Popis atributů pro výstup:
+
+- client_data: 8 (pohlaví) je číselník: MALE = muž, FEMALE = žena.
 
 + Request (application/json)
 
@@ -270,7 +276,6 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-Type: application/json
 
     + Body
 
@@ -279,10 +284,14 @@ Popis atributů pro výstup
                     "id": 1,
                     "module_type_id": 1,
                     "affected": true,
-                    "insert_time": "",
+                    "insert_time": "1412840432000",
                     "client_data": [
                         {
-                            "8": "1",
+                            "8": "MALE",
+                            "1": "John",
+                            "2": "Doe",
+                            "3": "1976",
+                            "9": "IT",
                             "10": "20"
                         }
                     ]
@@ -340,14 +349,13 @@ Popis atributů pro výstup
 
     + Body
 
-        {"scan_data_ids": [1, 2, 3]}
+            {"scan_data_ids": [1, 2, 3]}
 
 + Response 200 (application/json)
 
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-Type: application/json
 
     + Body
 
@@ -358,7 +366,6 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-Type: application/json
 
     + Body
 
@@ -374,7 +381,6 @@ Popis atributů pro výstup
     + Headers
 
             Access-Control-Allow-Origin: *
-            Content-Type: application/json
 
     + Body
 
