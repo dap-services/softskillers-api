@@ -27,6 +27,52 @@ API verze 2. Opřeno o model3.
 
 > Čas ve všech položkách (pokud není řečeno jinak) je unix_time plus ms (http://www.epochconverter.com).
 
+# Group Account
+
+Práce s účtem uživatele.
+
+## Přihlášení [/account/login]
+
+### Přihlášení uživatele [POST]
+
+Pro přihlašování je použita Basic varianta http autentizace (http://en.wikipedia.org/wiki/Basic_access_authentication). Pro přihlášení je třeba poslat jméno a heslo oddělené dvoutečkou a enkodované pomocí Base64 v Authorization hlavičce. Hlavička vypadá následovně:
+
+> Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+
+V případě, že je uživatel autentizovaný, vrací se zpět json, který obsahuje autentizační token.
+
+> Token má omezenou platnost - v případě expirace session, je posílán zpět http status kód `401` - je nutno zavolat resource `account/login` pro opětovné získání token.
+
+#### Práce s token
+
+Token je třeba předávat při každém požadavku v Authorization hlavičce ve následujícím formátu:
+
+> Authorization: AuthSub token="token"
+
++ Request
+
+    + Headers
+
+            Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {"token":"40287ee649518e890149577d1524000sda2112123"}
+
++ Response 401 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
 # Group Scan
 
 Zdroje a operace pro snímání osob.
@@ -85,7 +131,7 @@ Jakékoliv dotazy na Scan probíhají pomocí scan_code - identifikuje snímán�
 
     + Headers
 
-            Authorization: auth_token
+            Authorization: AuthSub token="token"
             Accept: application/json
 
     + Body
@@ -178,7 +224,7 @@ Popis atributů pro výstup viz resource scan [POST]
 
     + Headers
 
-            Authorization: auth_token
+            Authorization: AuthSub token="token"
             Accept: application/json
 
 + Response 200 (application/json)
@@ -268,7 +314,7 @@ Popis atributů pro výstup:
 
     + Headers
 
-            Authorization: auth_token
+            Authorization: AuthSub token="token"
             Accept: application/json
 
 + Response 200 (application/json)
@@ -461,7 +507,7 @@ Popis atributů pro výstup:
 
     + Headers
 
-            Authorization: auth_token
+            Authorization: AuthSub token="token"
             Accept: application/json
 
     + Body
