@@ -81,7 +81,7 @@ Zdroje a operace pro snímání osob.
 
 ### Vytváření snímání [POST]
 
-Seznam client_data_id:
+Seznam client_data_key:
 
 | id | Jméno                             |
 |----|-----------------------------------|
@@ -117,7 +117,7 @@ Popis atributů pro požadavek
     - label - text zobrazený ve snímači
     - editable - true | false
     - order - pořadí na obrazovce
-    - client_data_id - viz výše
+    - client_data_key - viz výše
     - list_items - možný výčet, zobrazuje se ve formě select prvku
 
 Popis atributů pro výstup
@@ -148,20 +148,20 @@ Jakékoliv dotazy na Scan probíhají pomocí scan_code - identifikuje snímán�
                         "label": "Gender",
                         "editable": false,
                         "order": 1,
-                        "client_data_id": 8,
+                        "client_data_key": 8,
                         "list_items": ["1", "2"]
                     },
                     {
                         "label": "Name",
                         "editable": true,
                         "order": 2,
-                        "client_data_id": 1,
+                        "client_data_key": 1,
                     },
                     {
                         "label": "Year of birth",
                         "editable": false,
                         "order": 3,
-                        "client_data_id": 3,
+                        "client_data_key": 3,
                         "number_from": 1993,
                         "number_to": 2008,
                         "number_step": 1,
@@ -250,20 +250,20 @@ Popis atributů pro výstup viz resource scan [POST]
                         "label": "Gender",
                         "editable": false,
                         "order": 1,
-                        "client_data_id": 8,
+                        "client_data_key": 8,
                         "list_items": ["1", "2"]
                     },
                     {
                         "label": "Name",
                         "editable": true,
                         "order": 2,
-                        "client_data_id": 1,
+                        "client_data_key": 1,
                     },
                     {
                         "label": "Year of birth",
                         "editable": false,
                         "order": 3,
-                        "client_data_id": 3,
+                        "client_data_key": 3,
                         "number_from": 1993,
                         "number_to": 2008,
                         "number_step": 1,
