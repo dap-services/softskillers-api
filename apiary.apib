@@ -72,6 +72,103 @@ Token je třeba předávat při každém požadavku v Authorization hlavičce ve
             Access-Control-Allow-Origin: *
 
     + Body
+    
+# Group Scan object
+
+Zdroje a operace pro práci se slovy, obrázky ... (scan_object).
+
+## Práce s kolekcemi scan objektů [/scan_object/collection]
+
+### Získání informací o kolekci scan objektů [POST]
+
+Popis atributů pro požadavek
+
+- label - název scan objektu. V případě slovo se jedná o slovo samotné.
+- object_type - typ scan objektu. Možnosti: WORD, PICTURE.
+- lang_code - ISO 639-1 kód jazyka.
+
+Popis atributů pro výstup
+
+- label - název scan objektu. V případě slovo se jedná o slovo samotné.
+- object_type - typ scan objektu. Možnosti: WORD, PICTURE.
+- lang_code - ISO 639-1 kód jazyka.
+- id - jedinečné id scan objektu.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: AuthSub token="token"
+            Accept: application/json
+
+    + Body
+
+                [
+                    {
+                        "label": "IT",
+                        "object_type": "WORD",
+                        "lang_code": "en"
+                    },
+                    {
+                        "label": "Projekt",
+                        "object_type": "WORD",
+                        "lang_code": "en"
+                    }
+                ]
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            [
+                {
+                    "label": "IT",
+                    "object_type": "WORD",
+                    "lang_code": "en",
+                    "id": 1
+                },
+                {
+                    "label": "Projekt",
+                    "object_type": "WORD",
+                    "lang_code": "en",
+                    "id": 2
+                }
+            ]
+
++ Response 400 (Bad Request)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro nevalidní požadavek."
+                    "error_code": "error.code.badRequest"
+                }
+            }
+
++ Response 401 (Unauthorized)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro autentizaci."
+                    "error_code": "error.code.authorization"
+                }
+            }
+
 
 # Group Scan
 
@@ -99,7 +196,7 @@ Seznam client_data_key:
 | 12 | Id snímané osoby                  |
 | 13 | Id zodpovědné osoby               |
 | 14 | Společnost                        |
-| 15 | Language code - ISO 639-2 alpha-3 |
+| 15 | Language code - ISO 639-1         |
 | 16 | Country code - ISO ALPHA-3 code   |
 | 17 | Externí Id skupiny snímků         |
 | 18 | Volitelná položka od klienta      |
