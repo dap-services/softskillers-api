@@ -170,7 +170,7 @@ Popis atributů pro výstup
             }
 
 
-# Group Scan
+# Group Scanning
 
 Zdroje a operace pro snímání osob.
 
@@ -589,7 +589,60 @@ Popis atributů pro výstup:
                     "error_code": "error.code.authorization"
                 }
             }
+            
 
+## Collector [/collector/get]
+
+Ukládání diagnostik ze snímače.
+
+### Vytváření snímání [POST]
+
+**Popis atributů pro požadavek**
+
+
+**Popis atributů pro výstup**
+
+- status - success | error
+- id - jedinečný identifikátor diagnostiky
+- hash - jedinečný hash diagnostiky
+
++ Request (application/xml)
+
+    + Headers
+
+            Accept: application/xml
+
+    + Body
+
+
++ Response 200 (application/xml)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+    
+            <?xml version="1.0" encoding="UTF-8"?>
+            <scandata>
+                <status>success</status>
+                    <id>1</id>
+                <hash>21346546516546</hash>
+            </scandata>
+
++ Response 400 (Bad Request)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+    
+            <?xml version="1.0" encoding="UTF-8"?>
+            <scandata>
+                <status>error</status>
+            </scandata>
+            
 # Group Result
 
 ## Generování výstupů [/result/{id}/generate]
