@@ -706,19 +706,19 @@ Ukládání diagnostik ze snímače.
 
 # Group Parameters
 
-## Výpočet parametrů [/parameters/compute]
+## Parameter computing [/parameters/compute]
 
 ### POST
 
-#### Popis atributů pro požadavek
+#### Request description
 
-- scan_data_ids - id osob, pro které se budou parametry počítat. Typ `ARRAY`, id jsou typu `NUMBER`.
-- parameters_ids - id parametrů, které se budou počítat. Typ `ARRAY`, id jsou typu `NUMBER`.
-- scan_objects_ids - id objektů pro výpočet (nepovinné). Typ `ARRAY`, id jsou typu `NUMBER`.
+- scan_data_ids - person ids. Type `ARRAY`, id type is `NUMBER` (required).
+- parameters_ids - parameter ids. Type `ARRAY`, id type is `NUMBER` (required).
+- scan_objects_ids - scan object ids. Type `ARRAY`, id type is `NUMBER`.
 
-#### Popis atributů odezvy
+#### Response description
 
-- resource vrací mapu (`OBJECT`), kde klíče jsou id parametrů, hodnotou je výsledek pro daný parametr.
+- this resource returns `OBJECT` (key: value). Parameter ids are keys, value can be `NUMBER`, `STRING`, `OBJECT`.
 
 + Request (application/json)
 
@@ -751,7 +751,7 @@ Ukládání diagnostik ze snímače.
 
             {
                 "error": {
-                    "message": "Chybové hlášení pro nevalidní požadavek."
+                    "message": "Error message."
                     "error_code": "error.code.badRequest"
                 }
             }
@@ -766,7 +766,7 @@ Ukládání diagnostik ze snímače.
 
             {
                 "error": {
-                    "message": "Chybové hlášení pro autentizaci."
+                    "message": "Authentication error message."
                     "error_code": "error.code.authorization"
                 }
             }
