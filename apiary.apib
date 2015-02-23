@@ -3,7 +3,7 @@ HOST: http://www.google.com
 
 # DAP Services a.s. API, version 2
 
-API verze 2. Opřeno o model3.
+Daps API version 2.
 
 ## Allowed HTTPs requests:
 
@@ -25,27 +25,27 @@ API verze 2. Opřeno o model3.
 - 429 `Too Many Requests` - Exceeded API limits. Pause requests, wait one minute, and try again.
 - 503 `Service Unavailable` - The service is temporary unavailable. Try again later.
 
-> Čas ve všech položkách (pokud není řečeno jinak) je unix_time plus ms (http://www.epochconverter.com).
+> Time is unix_time plus ms (http://www.epochconverter.com).
 
 # Group Account
 
-Práce s účtem uživatele.
+User account.
 
-## Přihlášení [/account/login]
+## Login [/account/login]
 
-### Přihlášení uživatele [POST]
+### User login [POST]
 
-Pro přihlašování je použita Basic varianta http autentizace (http://en.wikipedia.org/wiki/Basic_access_authentication). Pro přihlášení je třeba poslat jméno a heslo oddělené dvoutečkou a zakódované pomocí Base64 v Authorization hlavičce. Hlavička vypadá následovně:
+Login uses Basic access authentication (http://en.wikipedia.org/wiki/Basic_access_authentication). Example:
 
 > Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
 
-V případě, že je uživatel autentizovaný, vrací se zpět json, který obsahuje autentizační token.
+If user is logged in, API sends json with authentication token.  
 
-> Token má omezenou platnost - v případě expirace session, je posílán zpět http status kód `401` - je nutno zavolat resource `account/login` pro opětovné získání token.
+> Token has limited validity. When user received http status `401` (Unauthorized), then he have to login again. 
 
-#### Práce s token
+#### Token in http header
 
-Token je třeba předávat při každém požadavku v Authorization hlavičce ve následujícím formátu:
+Every API call requires authentication token in `Authorization` http header. Example: 
 
 > Authorization: AuthSub token="token"
 
