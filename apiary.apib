@@ -41,11 +41,11 @@ Login uses Basic access authentication (http://en.wikipedia.org/wiki/Basic_acces
 
 If user is logged in, API sends json with authentication token.  
 
-> Token has limited validity. When user received http status `401` (Unauthorized), then he have to login again. 
+> Token has limited validity. When user received http status `401` (Unauthorized), he has to login again. 
 
 #### Token in http header
 
-Every API call requires authentication token in `Authorization` http header. Example: 
+Every API call requires authorization token in `Authorization` http header. Example: 
 
 > Authorization: AuthSub token="token"
 
@@ -593,9 +593,9 @@ Popis atributů pro výstup:
 
 ## Collector [/collector/get]
 
-Saves scanner data.
+Saves diagnostics data from scanner.
 
-### Save scanner data. [POST]
+### Save diagnostics data. [POST]
 
 
 **Response description**
@@ -624,7 +624,7 @@ Saves scanner data.
             <?xml version="1.0" encoding="UTF-8"?>
             <scandata>
                 <status>success</status>
-                    <id>1</id>
+                <id>1</id>
                 <hash>21346546516546</hash>
             </scandata>
 
@@ -710,13 +710,13 @@ Saves scanner data.
 
 #### Request description
 
-- scan_data_ids - person ids. Type `ARRAY`, id type is `NUMBER` (required).
+- scan_data_ids - person ids (diagnostics ids). Type `ARRAY`, id type is `NUMBER` (required).
 - parameters_ids - parameter ids. Type `ARRAY`, id type is `NUMBER` (required).
 - scan_objects_ids - scan object ids. Type `ARRAY`, id type is `NUMBER`.
 
 #### Response description
 
-- this resource returns `OBJECT` (key: value). Parameter ids are keys, value can be `NUMBER`, `STRING`, `OBJECT`.
+- this resource returns `OBJECT` (key: value). Parameter ids are keys, values can be `NUMBER`, `STRING`, `OBJECT`.
 
 + Request (application/json)
 
@@ -737,7 +737,7 @@ Saves scanner data.
 
     + Body
 
-            {"1":70.35908828032882}
+            {"1": 70.3, "2": {"1": 30, "2": 91}}
 
 + Response 400 (Bad Request)
 
