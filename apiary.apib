@@ -309,6 +309,88 @@ Jakékoliv dotazy na Scan probíhají pomocí scan_code - identifikuje snímán�
                     "error_code": "error.code.authorization"
                 }
             }
+            
+## Update parametrů snímání osob [/scan/{scancode}]
+
+### Editace snímání [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: AuthSub token="token"
+            Accept: application/json
+
+    + Body
+
+            {
+                "name": "Scan name",
+                "description": "Description",
+                "state": "ACTIVE|CLOSED|TEST",
+                "scan_mask": [
+                    {
+                        "label": "Gender",
+                        "editable": false,
+                        "order": 1,
+                        "client_data_key": 8,
+                        "list_items": ["1", "2"]
+                    },
+                    {
+                        "label": "Name",
+                        "editable": true,
+                        "order": 2,
+                        "client_data_key": 1,
+                    },
+                    {
+                        "label": "Year of birth",
+                        "editable": false,
+                        "order": 3,
+                        "client_data_key": 3,
+                        "number_from": 1993,
+                        "number_to": 2008,
+                        "number_step": 1,
+                        "list_items": ["1993", "1994", "1995", "1996", "1997", "1998"]
+                    }
+                ]
+            }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+
++ Response 400 (Bad Request)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro nevalidní požadavek."
+                    "error_code": "error.code.badRequest"
+                }
+            }
+
++ Response 401 (Unauthorized)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro autentizaci."
+                    "error_code": "error.code.authorization"
+                }
+            }
+
 
 
 ## Informace o snímání [/scan/{scan_code}]
