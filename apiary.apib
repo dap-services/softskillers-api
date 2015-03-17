@@ -72,10 +72,10 @@ Every API call requires authorization token in `Authorization` http header. Exam
             Access-Control-Allow-Origin: *
 
     + Body
-    
-# Group Scan object
 
-Zdroje a operace pro práci se slovy, obrázky ... (scan_object).
+# Group Scanning
+
+Zdroje a operace pro snímání osob.
 
 ## Práce s kolekcemi scan objektů [/scan_object/collection]
 
@@ -169,12 +169,7 @@ Popis atributů pro výstup
                 }
             }
 
-
-# Group Scanning
-
-Zdroje a operace pro snímání osob.
-
-## Snímání osob [/scan]
+## Scan [/scan]
 
 ### Vytváření snímání [POST]
 
@@ -673,6 +668,57 @@ Popis atributů pro výstup:
             }
             
 
+## Scan Module [/scan_module]
+
+Resources for work with scan modules.
+
+### Create module [POST]
+
+This request creates new module for Scan. Order of elements in scan_objects array defines order of objects in diagnostics. Now supported only text objects.
+
+#### Request description
+
+- scan_objects_map - Type `OBJECT` (key: value). Key type is `STRING`, value is `NUMBER`. Key is text value of scan object, value is of type `Object` and contains detailed informations about scan object (e.g. language country code, link to video etc.).
+- scan_objects_array - Type `Array` of `String` values. Values are text values of scan objects. Order in array defines order in diagnostics. If you define this array you must set also scan_objects_lang_country_code. This code is used for each of scan objects.
+- scan_objects_lang_country_code - Type `String` defines language country code for each of scan objects in scan_objects_array.
+
+#### Response description
+
+- scan_module (`Number`) - new scan module id.
+
+
++ Request with map (application/json)
+
+    + Headers
+
+            Authorization: AuthSub token="token"
+            Accept: application/json
+
+    + Body
+
+            {"scan_objects_map": {"Myself":{"lang_country_code":"en_GB", "order":1},"My work":{"lang_country_code":"en_GB", "order":2},"My psyche":{"lang_country_code":"en_GB", "order":3},"My fault":{"lang_country_code":"en_GB", "order":4}]}
+
++ Request with array (application/json)
+
+    + Headers
+
+            Authorization: AuthSub token="token"
+            Accept: application/json
+
+    + Body
+
+            {"scan_objects_array": ["Myself","My work","My psyche","My fault"],"scan_objects_lang_country_code":"en_GB"}
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {"scan_module": 100}
+            
 ## Collector [/collector/get]
 
 Saves diagnostics data from scanner.
