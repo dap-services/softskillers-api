@@ -678,27 +678,17 @@ This request creates new module for Scan. Order of elements in scan_objects arra
 
 #### Request description
 
-- scan_objects_map - Type `OBJECT` (key: value). Key type is `STRING`, value is `NUMBER`. Key is text value of scan object, value is of type `Object` and contains detailed informations about scan object (e.g. language code, link to video etc.).
-- scan_objects_array - Type `Array` of `String` values. Values are text values of scan objects. Order in array defines order in diagnostics. If you define this array you must set also scan_objects_lang_code. This code is used for each of scan objects.
-- scan_objects_lang_code - Type `String` defines language code for each of scan objects in scan_objects_array.
+- scan_objects - Type `Array`. Values are `Objects`. Each of objects represents Scan Object with this attributes: 
+    - label (`required`)- scan object text representation. In a case of word the word itself
+    - object_type (`default WORD`) - type of scan object. e.g. [WORD | PICTURE]
+    - lang_code (`required`) - ISO 639-1 language code
+    - order (`required`) - order of object in module 
 
 #### Response description
 
 - scan_module (`Number`) - new scan module id.
 
-
-+ Request with map (application/json)
-
-    + Headers
-
-            Authorization: AuthSub token="token"
-            Accept: application/json
-
-    + Body
-
-            {"scan_objects_map": {"Myself":{"lang_code":"en", "order":1},"My work":{"lang_code":"en", "order":2},"My psyche":{"lang_code":"en", "order":3},"My fault":{"lang_code":"en", "order":4}]}
-
-+ Request with array (application/json)
++ Request (application/json)
 
     + Headers
 
@@ -707,7 +697,7 @@ This request creates new module for Scan. Order of elements in scan_objects arra
 
     + Body
 
-            {"scan_objects_array": ["Myself","My work","My psyche","My fault"],"scan_objects_lang_code":"en"}
+            {"scan_objects_map": [{"label":"Myself","lang_code":"en", "order":1},{"label":"My work","lang_code":"en", "order":2},{"label":"My psyche","lang_code":"en", "order":3},{"label":"My fault","lang_code":"en", "order":4}]}
 
 + Response 200 (application/json)
 
