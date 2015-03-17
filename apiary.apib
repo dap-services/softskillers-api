@@ -678,9 +678,9 @@ This request creates new module for Scan. Order of elements in scan_objects arra
 
 #### Request description
 
-- scan_objects_map - Type `OBJECT` (key: value). Key type is `STRING`, value is `NUMBER`. Key is text value of scan object, value is of type `Object` and contains detailed informations about scan object (e.g. language country code, link to video etc.).
-- scan_objects_array - Type `Array` of `String` values. Values are text values of scan objects. Order in array defines order in diagnostics. If you define this array you must set also scan_objects_lang_country_code. This code is used for each of scan objects.
-- scan_objects_lang_country_code - Type `String` defines language country code for each of scan objects in scan_objects_array.
+- scan_objects_map - Type `OBJECT` (key: value). Key type is `STRING`, value is `NUMBER`. Key is text value of scan object, value is of type `Object` and contains detailed informations about scan object (e.g. language code, link to video etc.).
+- scan_objects_array - Type `Array` of `String` values. Values are text values of scan objects. Order in array defines order in diagnostics. If you define this array you must set also scan_objects_lang_code. This code is used for each of scan objects.
+- scan_objects_lang_code - Type `String` defines language code for each of scan objects in scan_objects_array.
 
 #### Response description
 
@@ -696,7 +696,7 @@ This request creates new module for Scan. Order of elements in scan_objects arra
 
     + Body
 
-            {"scan_objects_map": {"Myself":{"lang_country_code":"en_GB", "order":1},"My work":{"lang_country_code":"en_GB", "order":2},"My psyche":{"lang_country_code":"en_GB", "order":3},"My fault":{"lang_country_code":"en_GB", "order":4}]}
+            {"scan_objects_map": {"Myself":{"lang_code":"en", "order":1},"My work":{"lang_code":"en", "order":2},"My psyche":{"lang_code":"en", "order":3},"My fault":{"lang_code":"en", "order":4}]}
 
 + Request with array (application/json)
 
@@ -707,7 +707,7 @@ This request creates new module for Scan. Order of elements in scan_objects arra
 
     + Body
 
-            {"scan_objects_array": ["Myself","My work","My psyche","My fault"],"scan_objects_lang_country_code":"en_GB"}
+            {"scan_objects_array": ["Myself","My work","My psyche","My fault"],"scan_objects_lang_code":"en"}
 
 + Response 200 (application/json)
 
