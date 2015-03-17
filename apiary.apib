@@ -679,7 +679,7 @@ This request creates new module for Scan. Order of elements in scan_objects arra
 #### Request description
 
 - name (`required`) - Type `String`. Attribut defines module name.
-- description (`optional`) - Type `String`. Attribut defines module description.
+- description (`required`) - Type `String`. Attribut defines module description.
 - scan_objects - Type `Array`. Values are `Objects`. Each of objects represents Scan Object with this attributes: 
     - label (`required`)- scan object text representation. In a case of word the word itself
     - object_type (`default WORD`) - type of scan object. e.g. [WORD | PICTURE]
@@ -701,6 +701,7 @@ This request creates new module for Scan. Order of elements in scan_objects arra
 
             {
                 "name": "My module",
+                "description": "My module purposes",
                 "scan_objects": [
                 {
                   "label": "Myself",
