@@ -744,14 +744,29 @@ Saves diagnostics data from scanner.
 
 ### Save diagnostics data. [POST]
 
+For saving data from diagnostics tool you can select XML or JSON format. XML format is now deprecated.
 
-**Response description**
+**JSON Request description**
++ client_data (Array) - mandatory. Link TODO
++ scan_id (Long) - this item is mandatory and identify group of diagnosed people. You can have one or more of this ids. You obtain this id(s) from DAP Services.
++ begin_time  (String) - mandatory, an ISO8601 time representing start of scanning process. Format of ISO String is YYYY-MM-DDThh:mm:ss.sssTZD (eg. 2013-07-01T10:00:00.125-04:00). See http://en.wikipedia.org/wiki/ISO_8601 for details.
++ end_time (String) - mandatory, end of scanning process. Time is in the ISO8601 format.
++ module_type_id (Long) - optional, if it will be necessary you obtain this id from DAP Services with rules how to use it.
++ selections (Array) - mandatory, the participant's choices.
++ scan_object_id (Long) - mandatory, id of the central object. You obtain all ids from DAP Services.
++ selections in selections section (Array) - mandatory. Color selections to particular object.
++ begin_time (String) - mandatory. Time when you are starting choosing the first color. Time is in the ISO8601 format.
++ end_time (String) - mandatory. Time when you already chose the last color and you click on "Continue" button. Time is in the ISO8601 format.
++ color_id (Integer) - mandatory. Id of the color the participant chose. You will obtain the set of ids from DAP Services.
++ selection_time (String) - mandatory. Time when the participant chose the color. Time is in the ISO8601 format.
+
+**XML Response description**
 
 - status - success | error.
 - id - diagnostics unique id.
 - hash - diagnostics unique hash.
 
-+ Request (text/xml)
++ Request XML deprecated (text/xml)
 
     + Headers
 
@@ -759,8 +774,74 @@ Saves diagnostics data from scanner.
 
     + Body
 
++ Request JSON (application/json) 
 
+    + Headers
+
+            Accept: application/json
+
+    + Body
+    
+            {
+                "client_data": [
+                    {
+                        "client_data_id": 8,
+                        "value": "MALE"
+                    },
+                    {
+                        "client_data_id": 10,
+                        "value": "33"
+                    },
+                    {
+                        "client_data_id": 15,
+                        "value": "155, 156, 157, 158"
+                    }
+                ],
+                "scan_id": 123456,
+                "begin_time": "2013-07-01T10:00:00.125-04:00",
+                "end_time": "2013-07-01T10:05:00.125-04:00",
+                "module_type_id": 1,
+                "selections": [
+                    {
+                        "scan_object_id": 1234,
+                        "selections": {
+                            "begin_time": "2013-07-01T10:00:10.125-04:00",
+                            "end_time": "2013-07-01T10:01:00.125-04:00",
+                            "choices": [
+                                {
+                                    "color_id": 1,
+                                    "selection_time": "2013-07-01T10:00:20.125-04:00"
+                                },
+                                {
+                                    "color_id": 2,
+                                    "selection_time": "2013-07-01T10:00:30.125-04:00"
+                                },
+                                {
+                                    "color_id": 3,
+                                    "selection_time": "2013-07-01T10:00:40.125-04:00"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+    
 + Response 200 (text/xml)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+    
+            <?xml version="1.0" encoding="UTF-8"?>
+            <scandata>
+                <status>success</status>
+                <id>1</id>
+                <hash>21346546516546</hash>
+            </scandata>
+            
++ Response 200 (application/json)
 
     + Headers
 
@@ -787,7 +868,7 @@ Saves diagnostics data from scanner.
             <scandata>
                 <status>error</status>
             </scandata>
-            
+
 # Group Result
 
 ## Generování výstupů [/result/{id}/generate]
