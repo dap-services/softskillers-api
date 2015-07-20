@@ -747,7 +747,7 @@ Saves diagnostics data from scanner.
 For saving data from diagnostics tool you can select XML or JSON format. XML format is now deprecated.
 
 **JSON Request description**
-+ client_data (Array) - mandatory. Link TODO
++ client_data (Array) - mandatory. Array of identifications of diagnosed person. You will obtain client_data_ids from DAP Services. Mandatory are gender (id 8) and age (id 10). See example for detail.
 + scan_id (Long) - this item is mandatory and identify group of diagnosed people. You can have one or more of this ids. You obtain this id(s) from DAP Services.
 + begin_time  (String) - mandatory, an ISO8601 time representing start of scanning process. Format of ISO String is YYYY-MM-DDThh:mm:ss.sssTZD (eg. 2013-07-01T10:00:00.125-04:00). See http://en.wikipedia.org/wiki/ISO_8601 for details.
 + end_time (String) - mandatory, end of scanning process. Time is in the ISO8601 format.
@@ -838,25 +838,10 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
             <scandata>
                 <status>success</status>
                 <id>1</id>
-                <hash>21346546516546</hash>
+                <hash>e6e68c849d638df6bd271da3012f623842941f91</hash>
             </scandata>
             
-+ Response 200 (application/json)
-
-    + Headers
-
-            Access-Control-Allow-Origin: *
-
-    + Body
-    
-            <?xml version="1.0" encoding="UTF-8"?>
-            <scandata>
-                <status>success</status>
-                <id>1</id>
-                <hash>21346546516546</hash>
-            </scandata>
-
-+ Response 400 (Bad Request)
++ Response 400 (text/xml)
 
     + Headers
 
@@ -868,6 +853,34 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
             <scandata>
                 <status>error</status>
             </scandata>
+            
++ Response 200 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+    
+            {
+                "status": "success",
+                "id": 10223,
+                "hash": "e6e68c849d638df6bd271da3012f623842941f91"
+            }
+            
++ Response 400 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+    
+            {
+                "status": "error",
+                "message": "Request content is not in valid JSON format.",
+                "code": 47586
+            }
 
 # Group Result
 
