@@ -670,8 +670,6 @@ Popis atributů pro výstup:
 
 ## Scan Module [/scan_module]
 
-Resources for work with scan modules.
-
 ### Create module [POST]
 
 This request creates new module for Scan. Order of elements in scan_objects array defines order of objects in diagnostics. Now supported only text objects.
@@ -736,6 +734,86 @@ This request creates new module for Scan. Order of elements in scan_objects arra
 
             {
               "scan_module": 100
+            }
+
+## Scan Module [/scan_module/{module_id}]
+
+### Get module [GET]
+
+This request returns module definition by identificator. The request is authorized.
+
+#### Request description
+
+- module_id (`required`) - ID of scan module. You obtain this value from DAP Services a.s.
+
+#### Response description
+
+- id - identificator of the scan module
+- name - name of the scan module
+- description - description of the scan module
+- scan_objects - list of module scan objects.
+    - label - scan objects label
+    - id - identificator of the scan object
+    - order - order of the scan object in module
+    - object_type - enumeration, type of scan object [WORD|PICTURE|etc.]
+    - lang_code - language code
+    
+If scan module doesn't exist or you have not permission to scan module you will recieve response 400 (Bad request).
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: AuthSub token="token"
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "id": 558,
+                "name": "Sportimind - Energie CZ",
+                "description": "Sportimind - Energie CZ",
+                "scan_objects": [
+                    {
+                        "label": "Trestám",
+                        "id": 21761,
+                        "order": 1,
+                        "object_type": "WORD",
+                        "lang_code": "cs"
+                    },
+                    {
+                        "label": "Lidé",
+                        "id": 21821,
+                        "order": 2,
+                        "object_type": "WORD",
+                        "lang_code": "cs"
+                    },
+                    {
+                        "label": "Moje psychika",
+                        "id": 21271,
+                        "order": 3,
+                        "object_type": "WORD",
+                        "lang_code": "cs"
+                    }
+                ]    
+            }
+
++ Response 400 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+    
+            {
+                "message": "Module not found.",
+                "moduleId": 559
             }
             
 ## Collector [/collector/get]
