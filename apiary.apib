@@ -39,13 +39,13 @@ Login uses Basic access authentication (http://en.wikipedia.org/wiki/Basic_acces
 
 > Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
 
-If user is logged in, API sends json with authentication token.  
+If user is logged in, API sends json with authentication token.
 
-> Token has limited validity. When user received http status `401` (Unauthorized), he has to login again. 
+> Token has limited validity. When user received http status `401` (Unauthorized), he has to login again.
 
 #### Token in http header
 
-Every API call requires authorization token in `Authorization` http header. Example: 
+Every API call requires authorization token in `Authorization` http header. Example:
 
 > Authorization: AuthSub token="token"
 
@@ -304,7 +304,7 @@ Jakékoliv dotazy na Scan probíhají pomocí scan_code - identifikuje snímán�
                     "error_code": "error.code.authorization"
                 }
             }
-            
+
 ## Update parametrů snímání osob [/scan/{scancode}]
 
 ### Editace snímání [PUT]
@@ -666,7 +666,7 @@ Popis atributů pro výstup:
                     "error_code": "error.code.authorization"
                 }
             }
-            
+
 
 ## Scan Module [/scan_module]
 
@@ -678,11 +678,11 @@ This request creates new module for Scan. Order of elements in scan_objects arra
 
 - name (`required`) - Type `String`. Attribut defines module name.
 - description (`required`) - Type `String`. Attribut defines module description.
-- scan_objects - Type `Array`. Values are `Objects`. Each of objects represents Scan Object with this attributes: 
+- scan_objects - Type `Array`. Values are `Objects`. Each of objects represents Scan Object with this attributes:
     - label (`required`)- scan object text representation. In a case of word the word itself
     - object_type (`default WORD`) - type of scan object. e.g. [WORD | PICTURE]
     - lang_code (`required`) - ISO 639-1 language code
-    - order (`required`) - order of object in module 
+    - order (`required`) - order of object in module
 
 #### Response description
 
@@ -757,7 +757,7 @@ This request returns module definition by identificator. The request is authoriz
     - order - order of the scan object in module
     - object_type - enumeration, type of scan object [WORD|PICTURE|etc.]
     - lang_code - language code
-    
+
 If scan module doesn't exist or you have not permission to scan module you will recieve response 400 (Bad request).
 
 + Request (application/json)
@@ -800,7 +800,7 @@ If scan module doesn't exist or you have not permission to scan module you will 
                         "object_type": "WORD",
                         "lang_code": "cs"
                     }
-                ]    
+                ]
             }
 
 + Response 400 (application/json)
@@ -810,12 +810,12 @@ If scan module doesn't exist or you have not permission to scan module you will 
             Access-Control-Allow-Origin: *
 
     + Body
-    
+
             {
                 "message": "Module not found.",
                 "moduleId": 559
             }
-            
+
 ## Collector [/collector/get]
 
 Saves diagnostics data from scanner.
@@ -852,14 +852,14 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
 
     + Body
 
-+ Request JSON (application/json) 
++ Request JSON (application/json)
 
     + Headers
 
             Accept: application/json
 
     + Body
-    
+
             {
                 "client_data": [
                     {
@@ -903,7 +903,7 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
                     }
                 ]
             }
-    
+
 + Response 200 (text/xml)
 
     + Headers
@@ -911,14 +911,14 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
             Access-Control-Allow-Origin: *
 
     + Body
-    
+
             <?xml version="1.0" encoding="UTF-8"?>
             <scandata>
                 <status>success</status>
                 <id>1</id>
                 <hash>e6e68c849d638df6bd271da3012f623842941f91</hash>
             </scandata>
-            
+
 + Response 400 (text/xml)
 
     + Headers
@@ -926,12 +926,12 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
             Access-Control-Allow-Origin: *
 
     + Body
-    
+
             <?xml version="1.0" encoding="UTF-8"?>
             <scandata>
                 <status>error</status>
             </scandata>
-            
+
 + Response 200 (application/json)
 
     + Headers
@@ -939,13 +939,13 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
             Access-Control-Allow-Origin: *
 
     + Body
-    
+
             {
                 "status": "success",
                 "id": 10223,
                 "hash": "e6e68c849d638df6bd271da3012f623842941f91"
             }
-            
+
 + Response 400 (application/json)
 
     + Headers
@@ -953,7 +953,7 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
             Access-Control-Allow-Origin: *
 
     + Body
-    
+
             {
                 "status": "error",
                 "message": "Request content is not in valid JSON format.",
