@@ -31,128 +31,6 @@ Daps API version 2.
 
 User account.
 
-## Get scanObject [/scan_object]
-
-### POST Get scanObject by Formula object and optional filters
-
-#### Request description
-
-- formula_object_ids - set of formula object ids. Type `ARRAY`, id type is `NUMBER` (required).
-- languages - set of input languages in ISO 639-1 format. Type `ARRAY`, id type is `String`. (optional)<br />
- <i>Note: result of this option could be more labels in requested language</i> 
-- scan_module_ids - set of scan module ids. Enable to find formula object label by existing scan module and guarantee unique label for each formula object. Type `ARRAY`, id type is `NUMBER` (optional).
-
-
-#### Response description
-
-- this resource returns `OBJECT` (key: value). Optional filters are keys, values are `OBJECT`.
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: AuthSub token="token"
-            Accept: application/json
-
-    + Body
-
-            {
-                "formula_object_ids": [1],
-                "languages": ["cs","en"],
-                "scan_module_ids": [123,124]
-            }
-
-+ Response 200 (application/json)
-
-    + Headers
-
-            Access-Control-Allow-Origin: *
-
-    + Body
-
-            {
-                "languages": {
-                    "cs": [
-                      {
-                        "label": "Já",
-                        "object_type": "WORD",
-                        "lang_code": "cs",
-                        "scan_object_id": 100,
-                        "formula_object_id": 1
-                      }
-                    ],
-                    "en": [
-                      {
-                        "label": "I",
-                        "object_type": "WORD",
-                        "lang_code": "en",
-                        "scan_object_id": 101,
-                        "formula_object_id": 1
-                      },
-                      {
-                        "label": "Me",
-                        "object_type": "WORD",
-                        "lang_code": "en",
-                        "scan_object_id": 102,
-                        "formula_object_id": 1
-                      }
-                    ]
-              },
-              "scan_modules": {
-                    "123": [
-                      {
-                        "label": "Já",
-                        "object_type": "WORD",
-                        "lang_code": "cs",
-                        "scan_object_id": 100,
-                        "formula_object_id": 1
-                      }
-                    ],
-                    "124": [
-                      {
-                        "label": "Me",
-                        "object_type": "WORD",
-                        "lang_code": "en",
-                        "scan_object_id": 102,
-                        "formula_object_id": 1
-                      }
-                    ]
-                  }
-            }
-
-+ Response 400 (Bad Request)
-
-    + Headers
-
-            Access-Control-Allow-Origin: *
-
-    + Body
-
-            // in dependency of error category 
-            {
-                "error": {
-                    "message": "Error message.",
-                    "error_code": "error.code.badRequest"
-                }
-            }
-            
-
-+ Response 401 (Unauthorized)
-
-    + Headers
-
-            Access-Control-Allow-Origin: *
-
-    + Body
-
-            {
-                "error": {
-                    "message": "Authentication error message.",
-                    "error_code": "error.code.authorization"
-                }
-            }
-
-
 ## Login [/account/login]
 
 ### User login [POST]
@@ -199,9 +77,9 @@ Every API call requires authorization token in `Authorization` http header. Exam
 
 Zdroje a operace pro snímání osob.
 
-## Get scanObject [/scan_object/]
+## Get scanObject [/scan_object]
 
-### POST Get scanObject by Formula object and optional filters
+### Get scanObject by Formula object and optional filters [POST]
 
 #### Request description
 
