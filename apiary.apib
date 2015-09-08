@@ -91,7 +91,7 @@ Zdroje a operace pro snímání osob.
 
 #### Response description
 
-- this resource returns `OBJECT` (key: value). Optional filters are keys, values are `OBJECT`.
+- this resource returns `ARRAY` of filtered scan objects.
 
 + Request (application/json)
 
@@ -116,18 +116,14 @@ Zdroje a operace pro snímání osob.
 
     + Body
 
-            {
-                "languages": {
-                    "cs": [
+             [
                       {
                         "label": "Já",
                         "object_type": "WORD",
                         "lang_code": "cs",
                         "scan_object_id": 100,
                         "formula_object_id": 1
-                      }
-                    ],
-                    "en": [
+                      },
                       {
                         "label": "I",
                         "object_type": "WORD",
@@ -143,27 +139,7 @@ Zdroje a operace pro snímání osob.
                         "formula_object_id": 1
                       }
                     ]
-              },
-              "scan_modules": {
-                    "123": [
-                      {
-                        "label": "Já",
-                        "object_type": "WORD",
-                        "lang_code": "cs",
-                        "scan_object_id": 100,
-                        "formula_object_id": 1
-                      }
-                    ],
-                    "124": [
-                      {
-                        "label": "Me",
-                        "object_type": "WORD",
-                        "lang_code": "en",
-                        "scan_object_id": 102,
-                        "formula_object_id": 1
-                      }
-                    ]
-                  }
+            
             }
 
 + Response 400 (Bad Request)
