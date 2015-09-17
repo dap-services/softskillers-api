@@ -1187,3 +1187,103 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
                 }
             }
 
+## Parameter computing [/parameters]
+
+### POST
+
+#### Request description
+
+- type - filter for table. Type Enum [FORMULA, VALUE, null]. if null return all parameters.
+
+#### Response description
+
+- this resource returns `ARRAY` of `OBJECT`. `OBJECT` contain id, name, description and type of parameter. Type determine what table will be used for find parameters.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: AuthSub token="token"
+            Accept: application/json
+
+    + Body
+
+            {"type": "FORMULA"}
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            [
+              {
+                "id": 1,
+                "name": "Blonde - Celková efektivita učení 0 - 100",
+                "description": "Celková efektivita učení",
+                "type": "VALUE"
+              },
+              {
+                "id": 2,
+                "name": "Blonde - Celkové ohrožení rizikovými jevy - 0 - 100",
+                "description": "Celkové ohrožení rizikovými jevy",
+                "type": "VALUE"
+              },
+              {
+                "id": 3,
+                "name": "Blonde - Vliv návaznosti na další studium na efektivitu učení - 0 - 100",
+                "description": "Korelace spontálního a formálního učení s faktorem návaznosti na další studium",
+                "type": "VALUE"
+              },
+              {
+                "id": 1,
+                "name": "Celková efektivita učení",
+                "description": "Korelace sponntáního a formálního učení",
+                "type": "FORMULA"
+              },
+              {
+                "id": 2,
+                "name": "Celkové ohrožení rizikovými jevy",
+                "description": "Celkové ohrožení rizikovými jevy",
+                "type": "FORMULA"
+              },
+              {
+                "id": 3,
+                "name": "Vliv návaznosti na další studium na efektivitu učení",
+                "description": "Korelace sponntáního a formálního učení s faktorem návaznosti na další studium",
+                "type": "FORMULA"
+              }
+            ]
+
++ Response 400 (Bad Request)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Error message.",
+                    "error_code": "error.code.badRequest"
+                }
+            }
+
++ Response 401 (Unauthorized)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Authentication error message.",
+                    "error_code": "error.code.authorization"
+                }
+            }
+
