@@ -77,7 +77,7 @@ Every API call requires authorization token in `Authorization` http header. Exam
 
 Zdroje a operace pro snímání osob.
 
-## Get scanObject [/scan_object]
+## Work with scan object [/scan_object]
 
 ### Get scanObject by Formula object and optional filters [POST]
 
@@ -173,23 +173,130 @@ Zdroje a operace pro snímání osob.
                     "error_code": "error.code.authorization"
                 }
             }
+            
+            
 
+### Create scan object  [PUT]
+
+Creates or loads scan object and returns it with id.
+Multimedia objects are supported.
+It's secured resource, it's necessary to be logged and have permissions.
+
+#### Request description
+
+- label - name of scan object. In case of type WORD, this is the word. Mandatory.
+- object_type - type of scan object. Mandatory. Values: COLOR, WORD, PICTURE, SOUND, VIDEO
+- lang_code - ISO 639-1 kód jazyka. Mandatory.
+- uri - link to multimedia. Mandatory for object types: PICTURE, SOUND, VIDEO
+- crc - check sum of multimedia. Mandatory for object types: PICTURE, SOUND, VIDEO
+- types - object additional information. Mandatory for object type: COLOR
+
+#### Response description
+
+- id - unique id of scan object.
+- label - name of scan object. In case of type WORD, this is the word. Mandatory.
+- object_type - type of scan object. Mandatory. Options: COLOR, WORD, PICTURE, SOUND, VIDEO
+- lang_code - ISO 639-1 kód jazyka. Mandatory.
+- uri - link to multimedia. Mandatory for object type: PICTURE, SOUND, VIDEO
+- crc - check sum of multimedia. Mandatory for object type: PICTURE, SOUND, VIDEO
+- types - object additional information. Mandatory for object type: COLOR
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: AuthSub token="token"
+            Accept: application/json
+
+    + Body
+
+            {
+                "label": "IT",
+                "object_type": "WORD",
+                "lang_code": "en"
+            }
+            or:
+            {
+                "label": "IT",
+                "object_type": "PICTURE",
+                "lang_code": "en",
+                "uri": "http://example.com/picture.png",
+                "crc": "56sdg516as465f"
+            }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "id": 9
+                "label": "IT",
+                "object_type": "WORD",
+                "lang_code": "en"
+            }
+            or:
+            {
+                "id": 10
+                "label": "IT",
+                "object_type": "WORD",
+                "lang_code": "en",
+                "uri": "http://example.com/picture.png",
+                "crc": "56sdg516as465f"
+            }
+
++ Response 400 (Bad Request)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Error message.",
+                    "error_code": "error.code.badRequest"
+                }
+            }
+            
+
++ Response 401 (Unauthorized)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Authentication error message.",
+                    "error_code": "error.code.authorization"
+                }
+            }
 
 
 ## Práce s kolekcemi scan objektů [/scan_object/collection]
 
 ### Získání informací o kolekci scan objektů [POST]
 
-Popis atributů pro požadavek
+Vytvoří nebo načte již existující scan objecty a vrátí je s doplněným id.
+Nepodporuje multimediální objekty.
+
+#### Request description
 
 - label - název scan objektu. V případě slovo se jedná o slovo samotné.
-- object_type - typ scan objektu. Možnosti: WORD, PICTURE.
+- object_type - typ scan objektu. Možnosti: WORD.
 - lang_code - ISO 639-1 kód jazyka.
 
-Popis atributů pro výstup
+#### Response description
 
 - label - název scan objektu. V případě slovo se jedná o slovo samotné.
-- object_type - typ scan objektu. Možnosti: WORD, PICTURE.
+- object_type - typ scan objektu. Možnosti: WORD.
 - lang_code - ISO 639-1 kód jazyka.
 - id - jedinečné id scan objektu.
 
