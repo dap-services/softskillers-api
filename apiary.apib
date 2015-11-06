@@ -277,6 +277,82 @@ It's secured resource, it's necessary to be logged and have permissions.
                 }
             }
 
+## Work with formula object [/formula_object/add_scan_object]
+
+###  [PUT] Add scan object to formula object
+
+Add exist scan object to exist formula object.
+
+#### Request description
+
+- formula_object_id - id of formula object
+- scan_object_id - id of scan object
+
+#### Response description
+
+nothing
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: AuthSub token="token"
+            Accept: application/json
+
+    + Body
+
+                {
+                    "formula_object_id": 2,
+                    "scan_object_id": 1
+                }
+
++ Response 200
+
++ Response 400 (Bad Request)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro nevalidní požadavek.",
+                    "error_code": "error.code.badRequest"
+                }
+            }
+
++ Response 401 (Unauthorized)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro autentizaci.",
+                    "error_code": "error.code.authorization"
+                }
+            }
+
++ Response 403 (Forbidden)
+
+    + Headers
+
+            Access-Control-Allow-Origin: *
+
+    + Body
+
+            {
+                "error": {
+                    "message": "Chybové hlášení pro autentizaci.",
+                    "error_code": "error.code.authorization"
+                }
+            }
+
 
 ## Práce s kolekcemi scan objektů [/scan_object/collection]
 
