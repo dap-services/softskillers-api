@@ -280,9 +280,10 @@ It's secured resource, it's necessary to be logged and have permissions.
 
 ## Work with formula object [/formula_object/add_scan_object]
 
-### Add scan object to formula object [PUT]
+### Assign scan object to formula object [PUT]
 
-Add exist scan object to exist formula object.
+Assign exist scan object to exist formula object.
+It's secured resource, it's necessary to be logged and have permissions.
 
 #### Request description
 
@@ -291,7 +292,7 @@ Add exist scan object to exist formula object.
 
 #### Response description
 
-nothing
+Response have empty body.
 
 + Request (application/json)
 
@@ -318,10 +319,8 @@ nothing
     + Body
 
             {
-                "error": {
-                    "message": "Chybové hlášení pro nevalidní požadavek.",
-                    "error_code": "error.code.badRequest"
-                }
+                "message": "Cannot parse input Json string. Json string is not valid.",
+                "content": "{'scan_object_id': '1', 'formula_object_id': '2'}"
             }
 
 + Response 401 (Unauthorized)
@@ -333,10 +332,7 @@ nothing
     + Body
 
             {
-                "error": {
-                    "message": "Chybové hlášení pro autentizaci.",
-                    "error_code": "error.code.authorization"
-                }
+                "message": "Authorization header was empty"
             }
 
 + Response 403 (Forbidden)
@@ -348,10 +344,7 @@ nothing
     + Body
 
             {
-                "error": {
-                    "message": "Chybové hlášení pro autentizaci.",
-                    "error_code": "error.code.authorization"
-                }
+                "message": "You do not have permission."
             }
 
 
