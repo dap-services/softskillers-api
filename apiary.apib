@@ -353,7 +353,7 @@ Response have empty body.
 ### Získání informací o kolekci scan objektů [POST]
 
 Vytvoří nebo načte již existující scan objecty a vrátí je s doplněným id.
-Nepodporuje multimediální objekty.
+Nepodporuje multimediální objekty. V
 
 #### Request description
 
@@ -363,7 +363,10 @@ Nepodporuje multimediální objekty.
 
 #### Response description
 
+Výstupní kolekce má stejné pořadí a stejný počet prvků, jako má vstupní kolekce. V případě, že vstup obsahuje stejné slova v různých variantách (Me, me, mE, ME), jsou vráceny všechny zpět s jedním id a stejným daps_label.
+
 - label - název scan objektu. V případě slovo se jedná o slovo samotné.
+- daps_label - DAPs varianta slova, pokud již toto slovo v databázi máme. Jinak obsahuje vstupní label.
 - object_type - typ scan objektu. Možnosti: WORD.
 - lang_code - ISO 639-1 kód jazyka.
 - id - jedinečné id scan objektu.
@@ -400,12 +403,14 @@ Nepodporuje multimediální objekty.
 
             [
                 {
-                    "label": "IT",
+                    "label": "iT",
+                    "daps_label": "IT",
                     "object_type": "WORD",
                     "lang_code": "en",
                     "id": 1
                 },
                 {
+                    "label": "projekt",
                     "label": "Projekt",
                     "object_type": "WORD",
                     "lang_code": "en",
@@ -1461,4 +1466,3 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
                     "error_code": "error.code.authorization"
                 }
             }
-
