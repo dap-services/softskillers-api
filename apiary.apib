@@ -363,10 +363,10 @@ Nepodporuje multimediální objekty. V
 
 #### Response description
 
-Výstupní kolekce má stejné pořadí a stejný počet prvků, jako má vstupní kolekce. V případě, že vstup obsahuje stejné slova v různých variantách (Me, me, mE, ME), jsou vráceny všechny zpět s jedním id a stejným daps_label.
+Výstupní kolekce má stejné pořadí a stejný počet prvků, jako má vstupní kolekce. V případě, že vstup obsahuje stejné slova v různých variantách (Me, me, mE, ME), jsou vráceny všechny zpět s jedním id a stejným label (původní label je v atributu original_label).
 
-- label - název scan objektu. V případě slovo se jedná o slovo samotné.
-- daps_label - DAPs varianta slova, pokud již toto slovo v databázi máme. Jinak obsahuje vstupní label.
+- label - DAPs varianta slova, pokud již toto slovo v databázi máme. Jinak obsahuje vstupní label.
+- original_label - původní label.
 - object_type - typ scan objektu. Možnosti: WORD.
 - lang_code - ISO 639-1 kód jazyka.
 - id - jedinečné id scan objektu.
