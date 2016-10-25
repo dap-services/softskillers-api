@@ -1115,6 +1115,10 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
 + begin_time (String) - mandatory. Time when you are starting choosing the first color. Time is in the ISO8601 format.
 + end_time (String) - mandatory. Time when you already chose the last color and you click on "Continue" button. Time is in the ISO8601 format.
 + color_id (Integer) - mandatory. Id of the color the participant chose. You will obtain the set of ids from DAP Services.
++ hit (Boolean) - mandatory. If ball was hit, then true. If not, then miss_distance field is required.
++ miss_distance (Long) - if user did not hit the ball, we need distance from nearest ball in pixels.
++ exact_color_hex (String) - exact color under pointer. Example: 030361ff.
++ back_button (Boolean) - if Back button was used.
 + selection_time (String) - mandatory. Time when the participant chose the color. Time is in the ISO8601 format.
 
 **XML Response description**
@@ -1167,14 +1171,27 @@ For saving data from diagnostics tool you can select XML or JSON format. XML for
                             "choices": [
                                 {
                                     "color_id": 1,
+                                    "hit": true,
+                                    "exact_color_hex": "037a03ff",
                                     "selection_time": "2013-07-01T10:00:20.125-04:00"
                                 },
                                 {
                                     "color_id": 2,
+                                    "hit": true,
+                                    "exact_color_hex": "660066ff",
                                     "selection_time": "2013-07-01T10:00:30.125-04:00"
                                 },
                                 {
+                                    "color_id": 4,
+                                    "hit": false,
+                                    "miss_distance": 1,
+                                    "selection_time": "2013-07-01T10:00:40.125-04:00"
+                                }
+                                {
                                     "color_id": 3,
+                                    "hit": true,
+                                    "exact_color_hex": "0304b0ff",
+                                    "back_button": false,
                                     "selection_time": "2013-07-01T10:00:40.125-04:00"
                                 }
                             ]
